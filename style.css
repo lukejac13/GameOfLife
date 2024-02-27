@@ -1,0 +1,15 @@
+h1 {
+    color: purple;
+    font-size: 40px;
+    font-style: italic;
+}
+
+p {
+    color: blue;
+    border: 1px solid black;
+}
+
+.important {
+    font-weight: bold;
+    color: red;
+}
