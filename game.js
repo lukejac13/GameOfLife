@@ -1,5 +1,5 @@
-let container = document.getElementById('gameContainer');
-let p = document.createElement('p');
-p.innerHTML = 'Hello, world!';
-// As if `p` is `<p>Hello, world!</p>`
-container.appendChild(p);
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+
+ctx.fillStyle = "green";
+ctx.fillRect(10, 10, 150, 100);
