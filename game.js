@@ -116,21 +116,24 @@ function createGrid(rows, cols) {
   }
 
   function speedDown(){
-    //slow down
+    if (speed < 1000) {
+      speed += 10
 
-    //Change 'speed' variable to make interval faster. 
-    //Note: higher speed value, slower frame change
-    //Speed = 10 is faster than speed = 1000
+    }
+    stopGame();
+    startGame();
+    document.getElementById('speed'),innerHTML='Speed:'+speed+'ms';
   }
 
   function speedUp(){
-    
-    //speed up
-
-    //Change 'speed' variable to make interval faster. 
-    //Note: higher speed value, slower frame change
-    //Speed = 10 is faster than speed = 1000
+    if (speed > 0) {
+      speed -= 10
+      stopGame();
+      startGame();
+    }
+    document.getElementById('speed'),innerHTML='Speed:'+speed+'ms';
   }
+    
   
   document.getElementById('clear').addEventListener('click', clearGrid);
 
