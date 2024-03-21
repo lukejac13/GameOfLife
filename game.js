@@ -3,42 +3,38 @@ const ctx = canvas.getContext('2d');
 const cellSize = 10;
 const numRows = canvas.height / cellSize;
 const numCols = canvas.width / cellSize;
-let grid = createGrid(numRows, numCols);
+let grid = createGrid(numRows, numCols, 0);
 let isRunning = false;
 let speed = 100;
+let colorWheel = ['black','aqua', '#fa7', 'red', 'orange', 'yellow', 'green', 'blue', 'purple']
+let color = colorWheel[0];
 
-
-function createGrid(rows, cols) {
+//Model 
+function createGrid(rows, cols, isRandom) {
     let grid = [];
     for (let i = 0; i < rows; i++) {
       let row = [];
       for (let j = 0; j < cols; j++) {
-        row.push(0);
+        if(isRandom == 1){
+          if(Math.floor(Math.random()*1000) <=400){
+          
+            row.push(1);
+          }else{
+            row.push(0);
+          }
+        }else if(isRandom == 0){
+          row.push(0);
+        }
+        
       }
       grid.push(row);
     }
     return grid;
   }
 
-  function startGame(){
-    if(!isRunning){
-      isRunning = true;
-      intervalId = setInterval(() => {
-        updateGrid();
-      }, speed);
-    }
-  }
-
-
-  function stopGame(){
-    if(isRunning){
-      isRunning = false;
-      clearInterval(intervalId);
-    }
-  }
 
   function updateGrid(){
-    let newGrid = createGrid(numRows, numCols)
+    let newGrid = createGrid(numRows, numCols, 0)
 
     for(i = 0; i < numRows; i++){
       for(j = 0; j < numCols; j++){
@@ -79,7 +75,7 @@ function createGrid(rows, cols) {
 
     for (let i = 0; i < numRows; i++) {
       for (let j = 0; j < numCols; j++) {
-        ctx.fillStyle = grid[i][j] === 1 ? '#fff' : '#000';
+        ctx.fillStyle = grid[i][j] === 1 ? 'white' : color;
         ctx.fillRect(j * cellSize, i * cellSize, cellSize, cellSize);
       }
     }
@@ -104,6 +100,27 @@ function createGrid(rows, cols) {
     renderGrid();
   }
 
+  //End Model
+
+  //Controller
+  function startGame(){
+    if(!isRunning){
+      isRunning = true;
+      intervalId = setInterval(() => {
+        updateGrid();
+      }, speed);
+    }
+  }
+
+
+  function stopGame(){
+    if(isRunning){
+      isRunning = false;
+      clearInterval(intervalId);
+    }
+  }
+
+
   function moveForward(){
     stopGame();
     updateGrid();
@@ -111,16 +128,20 @@ function createGrid(rows, cols) {
   
 
   function clearGrid() {
-    grid = createGrid(numRows, numCols);
+    grid = createGrid(numRows, numCols, 0);
     renderGrid();
   }
 
   function speedDown(){
+  document.getElementById('speed').innerHTML = 'Speed: '+speed +'ms';
+
     //slow down
 
     //Change 'speed' variable to make interval faster. 
     //Note: higher speed value, slower frame change
     //Speed = 10 is faster than speed = 1000
+
+    
   }
 
   function speedUp(){
@@ -132,6 +153,25 @@ function createGrid(rows, cols) {
     //Speed = 10 is faster than speed = 1000
   }
   
+function randomize(){
+  clearGrid();
+  grid = createGrid(numRows, numCols, 1);
+  renderGrid();
+}
+
+let nextColor = 1
+
+function changeColor(){
+  color = colorWheel[nextColor]
+  nextColor += 1;
+  if(nextColor == colorWheel.length){
+    nextColor = 0
+  }
+  
+  renderGrid();
+}
+
+
   document.getElementById('clear').addEventListener('click', clearGrid);
 
   document.getElementById('forward').addEventListener('click', updateGrid);
@@ -141,6 +181,11 @@ function createGrid(rows, cols) {
   
   document.getElementById('speedUp').addEventListener('click', speedUp);
   document.getElementById('speedDown').addEventListener('click', speedDown);
+
+  document.getElementById('random').addEventListener('click', randomize);
+
+  document.getElementById('backgroundColor').addEventListener('click', changeColor);
+  
   
   canvas.addEventListener('click', (e) => {
     const rect = canvas.getBoundingClientRect();
@@ -151,5 +196,5 @@ function createGrid(rows, cols) {
     toggleCell(cellY, cellX);
   });
   
-
+//endController
   renderGrid();
