@@ -6,9 +6,10 @@ const numCols = canvas.width / cellSize;
 let grid = createGrid(numRows, numCols, 0);
 let isRunning = false;
 let speed = 100;
-let colorWheel = ['black','aqua', '#fa7', 'red', 'orange', 'yellow', 'green', 'blue', 'purple']
+let colorWheel = ['black','aqua', '#fa7', 'red', 'orange', 'yellow', 'green', 'blue', 'purple', 'white']
 let color = colorWheel[0];
-
+let aliveColor = colorWheel[9]
+let gridboxcolor=colorWheel[0];
 //Model 
 function createGrid(rows, cols, isRandom) {
     let grid = [];
@@ -75,7 +76,7 @@ function createGrid(rows, cols, isRandom) {
 
     for (let i = 0; i < numRows; i++) {
       for (let j = 0; j < numCols; j++) {
-        ctx.fillStyle = grid[i][j] === 1 ? 'white' : color;
+        ctx.fillStyle = grid[i][j] === 1 ? aliveColor : color;
         ctx.fillRect(j * cellSize, i * cellSize, cellSize, cellSize);
       }
     }
@@ -140,7 +141,7 @@ function createGrid(rows, cols, isRandom) {
     }
     stopGame();
     startGame();
-    document.getElementById('speed'),innerHTML='Speed:'+speed+'ms';
+    document.getElementById('speed').innerHTML='Speed: '+speed+'ms';
 
   }
 
@@ -150,7 +151,7 @@ function createGrid(rows, cols, isRandom) {
       stopGame();
       startGame();
     }
-    document.getElementById('speed'),innerHTML='Speed:'+speed+'ms';
+    document.getElementById('speed').innerHTML='Speed: '+speed+'ms';
   }
     
   
@@ -160,17 +161,39 @@ function randomize(){
   renderGrid();
 }
 
-let nextColor = 1
+let nextColor = 1;
 
-function changeColor(){
+function changeBackgroundColor(){
   color = colorWheel[nextColor]
   nextColor += 1;
   if(nextColor == colorWheel.length){
-    nextColor = 0
+    nextColor = 0;
+  }
+  if(color == aliveColor){
+    color = colorWheel[nextColor];
+    nextColor+=1;
+  }
+  
+  
+  renderGrid();
+}
+
+let nextColorAlive = 1;
+function changeAliveColor(){
+  aliveColor = colorWheel[nextColorAlive]
+  nextColorAlive += 1;
+  if(nextColorAlive == colorWheel.length){
+    nextColorAlive = 0;
+  }
+
+if(aliveColor == color){
+    aliveColor = colorWheel[nextColorAlive];
+    nextColorAlive+=1;
   }
   
   renderGrid();
 }
+
 
 
   document.getElementById('clear').addEventListener('click', clearGrid);
@@ -185,7 +208,8 @@ function changeColor(){
 
   document.getElementById('random').addEventListener('click', randomize);
 
-  document.getElementById('backgroundColor').addEventListener('click', changeColor);
+  document.getElementById('backgroundColor').addEventListener('click', changeBackgroundColor);
+  document.getElementById('gridBoxColor').addEventListener('click',changeAliveColor);
   
   
   canvas.addEventListener('click', (e) => {
