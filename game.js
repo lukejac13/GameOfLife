@@ -8,6 +8,7 @@ let isRunning = false;
 let speed = 100;
 let colorWheel = ['black','aqua', '#fa7', 'red', 'orange', 'yellow', 'green', 'blue', 'purple']
 let color = colorWheel[0];
+let seedArray = [];
 
 //Model 
 function createGrid(rows, cols, isRandom) {
@@ -172,6 +173,37 @@ function changeColor(){
   renderGrid();
 }
 
+function saveSeed(){
+  let name = prompt("Name your seed");
+  let seedDict = {
+              name: name, 
+              grid: JSON.stringify(grid)
+            }
+  seedArray.push(seedDict);
+  updateSeedList();
+}
+
+function loadSeed(index){
+  if(index >=0 && index < seedArray.length){
+let seedDict = seedArray[index];
+grid = JSON.parse(seedDict.grid);
+renderGrid();
+  }
+}
+
+function updateSeedList(){
+  const seedList = document.getElementById('seedList');
+  seedList.innerHTML = '';
+  seedArray.forEach((seedDict, index) => {
+    let seedElement = document.createElement('li');
+    seedElement.textContent = seedDict.name;
+    seedElement.addEventListener('click', () => {
+      loadSeed(index);
+    });
+    seedList.appendChild(seedElement);
+  });
+}
+
 
   document.getElementById('clear').addEventListener('click', clearGrid);
 
@@ -186,7 +218,7 @@ function changeColor(){
   document.getElementById('random').addEventListener('click', randomize);
 
   document.getElementById('backgroundColor').addEventListener('click', changeColor);
-  
+  document.getElementById('saveSeed').addEventListener('click', saveSeed);
   
   canvas.addEventListener('click', (e) => {
     const rect = canvas.getBoundingClientRect();

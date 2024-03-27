@@ -17,3 +17,9 @@ button {
     justify-content:center;
 
   }
+  ul{
+    
+  }
+  li:hover{
+cursor:pointer
+  }
