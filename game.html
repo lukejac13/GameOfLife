@@ -7,10 +7,9 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id = "center"></div>
-        <div id="buttons">
+    <div id = "center" ></div>
+        <div id="buttons" style = 'width:35%; border:3px solid black;'>
             <button id="start">Start</button>
-            <button id="stop">Stop</button>
             <button id="clear">Clear</button>
             <br>
             <br>
@@ -25,13 +24,27 @@
             <br>
             <br>
             <button id = 'backgroundColor'>Change Background Color</button>
-            <button id = 'gridBoxColor'>Change gridBoxColor</button>         
+            <button id = 'aliveColor'>Change Background Color</button>
+           <br>
+           <br>
+            <button id = 'saveSeed'> Save Seed</button>
+            
+                 
         </div>
         <br>
-        
-        <canvas id="canvas" width="500" height="500"></canvas>
+        <div style = 'width:35%; border: 3px solid black; float:left;'>
+            <canvas id="canvas" width="500" height="500" style = "border:2px solid black"></canvas>
+        </div>
+        <div style = 'width:70%; border:3px solid black; margin-left:35%'>
+
+            <ul id = 'seedList'>
+                
+
+            </ul>
+        </div>
         
     </div>
+    
     
 <script src="game.js"></script>
 </body>

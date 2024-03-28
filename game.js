@@ -6,10 +6,13 @@ const numCols = canvas.width / cellSize;
 let grid = createGrid(numRows, numCols, 0);
 let isRunning = false;
 let speed = 100;
-let colorWheel = ['black','aqua', '#fa7', 'red', 'orange', 'yellow', 'green', 'blue', 'purple', 'white']
-let color = colorWheel[0];
-let aliveColor = colorWheel[9]
-let gridboxcolor=colorWheel[0];
+let colorWheel = ['black','aqua', '#fa7', 'red', 'orange', 'yellow', 'green', 'blue', 'purple', 'white', 'gray', 'pink'];
+
+let aliveColor = colorWheel[9];
+let backgroundColor = colorWheel[0];
+
+let seedArray = [];
+
 //Model 
 function createGrid(rows, cols, isRandom) {
     let grid = [];
@@ -76,7 +79,7 @@ function createGrid(rows, cols, isRandom) {
 
     for (let i = 0; i < numRows; i++) {
       for (let j = 0; j < numCols; j++) {
-        ctx.fillStyle = grid[i][j] === 1 ? aliveColor : color;
+        ctx.fillStyle = grid[i][j] === 1 ? aliveColor : backgroundColor;
         ctx.fillRect(j * cellSize, i * cellSize, cellSize, cellSize);
       }
     }
@@ -104,23 +107,32 @@ function createGrid(rows, cols, isRandom) {
   //End Model
 
   //Controller
-  function startGame(){
+
+  function startStop(){
     if(!isRunning){
-      isRunning = true;
-      intervalId = setInterval(() => {
-        updateGrid();
-      }, speed);
+      startGame();
+      document.getElementById('start').innerHTML = 'Stop';
+      
+    }else if(isRunning){
+      stopGame();
+      document.getElementById('start').innerHTML = 'Start';
     }
   }
+ 
+function startGame(){
+  
+    isRunning = true;
+    intervalId = setInterval(() => {
+      updateGrid();
+    }, speed);
+    
+}
 
-
-  function stopGame(){
-    if(isRunning){
+function stopGame(){
       isRunning = false;
       clearInterval(intervalId);
-    }
-  }
-
+      
+}
 
   function moveForward(){
     stopGame();
@@ -129,8 +141,11 @@ function createGrid(rows, cols, isRandom) {
   
 
   function clearGrid() {
+    stopGame();
+    document.getElementById('start').innerHTML = 'Start';
     grid = createGrid(numRows, numCols, 0);
     renderGrid();
+    
   }
 
   function speedDown(){
@@ -138,9 +153,14 @@ function createGrid(rows, cols, isRandom) {
     if (speed < 1000) {
       speed += 10
 
+      if(isRunning){
+        stopGame();
+        startGame();
+      }
     }
-    stopGame();
-    startGame();
+
+    
+    
     document.getElementById('speed').innerHTML='Speed: '+speed+'ms';
 
   }
@@ -148,8 +168,12 @@ function createGrid(rows, cols, isRandom) {
   function speedUp(){
     if (speed > 0) {
       speed -= 10
-      stopGame();
-      startGame();
+      
+      if(isRunning){
+        stopGame();
+        startGame();
+      }
+      
     }
     document.getElementById('speed').innerHTML='Speed: '+speed+'ms';
   }
@@ -161,37 +185,76 @@ function randomize(){
   renderGrid();
 }
 
-let nextColor = 1;
 
+let nextColor = 1;
 function changeBackgroundColor(){
-  color = colorWheel[nextColor]
+  backgroundColor = colorWheel[nextColor]
   nextColor += 1;
   if(nextColor == colorWheel.length){
     nextColor = 0;
   }
-  if(color == aliveColor){
-    color = colorWheel[nextColor];
+  if(backgroundColor == aliveColor){
+    backgroundColor = colorWheel[nextColor];
     nextColor+=1;
+    if(nextColor == colorWheel.length){
+    nextColor = 0;
   }
-  
+  }
   
   renderGrid();
 }
 
-let nextColorAlive = 1;
+let nextColorAlive = 10;
 function changeAliveColor(){
   aliveColor = colorWheel[nextColorAlive]
   nextColorAlive += 1;
+
   if(nextColorAlive == colorWheel.length){
     nextColorAlive = 0;
   }
-
-if(aliveColor == color){
+  if(aliveColor == backgroundColor){
     aliveColor = colorWheel[nextColorAlive];
     nextColorAlive+=1;
+    if(nextColorAlive == colorWheel.length){
+      nextColorAlive = 0;
+    }
   }
   
+  
+  
+
   renderGrid();
+}
+
+function saveSeed(){
+  let name = prompt("Name your seed");
+  let seedDict = {
+              name: name, 
+              grid: JSON.stringify(grid)
+            }
+  seedArray.push(seedDict);
+  updateSeedList();
+}
+
+function loadSeed(index){
+  if(index >=0 && index < seedArray.length){
+let seedDict = seedArray[index];
+grid = JSON.parse(seedDict.grid);
+renderGrid();
+  }
+}
+
+function updateSeedList(){
+  const seedList = document.getElementById('seedList');
+  seedList.innerHTML = '';
+  seedArray.forEach((seedDict, index) => {
+    let seedElement = document.createElement('li');
+    seedElement.textContent = seedDict.name;
+    seedElement.addEventListener('click', () => {
+      loadSeed(index);
+    });
+    seedList.appendChild(seedElement);
+  });
 }
 
 
@@ -200,8 +263,8 @@ if(aliveColor == color){
 
   document.getElementById('forward').addEventListener('click', updateGrid);
 
-  document.getElementById('start').addEventListener('click', startGame);
-  document.getElementById('stop').addEventListener('click', stopGame);
+  document.getElementById('start').addEventListener('click', startStop);
+  
   
   document.getElementById('speedUp').addEventListener('click', speedUp);
   document.getElementById('speedDown').addEventListener('click', speedDown);
@@ -209,8 +272,10 @@ if(aliveColor == color){
   document.getElementById('random').addEventListener('click', randomize);
 
   document.getElementById('backgroundColor').addEventListener('click', changeBackgroundColor);
-  document.getElementById('gridBoxColor').addEventListener('click',changeAliveColor);
+  document.getElementById('aliveColor').addEventListener('click', changeAliveColor);
   
+
+  document.getElementById('saveSeed').addEventListener('click', saveSeed);
   
   canvas.addEventListener('click', (e) => {
     const rect = canvas.getBoundingClientRect();
