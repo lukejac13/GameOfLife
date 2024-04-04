@@ -16,7 +16,7 @@ let stencil = "cell";
 let stencilArray = ['cell', 'glider', 'tub', 'beehive', 'boat', 'toad', 'lwss', 'mwss', 'hwss', 'pulsar', 'block', 'gliderGun'];
 let isRandom = 0;
 
-let frame = 0;
+var frame = 0;
 var numAlive = 0;
 var numDead = 0;
 
