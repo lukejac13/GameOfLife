@@ -7,32 +7,51 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id = "center"></div>
-        <div id="buttons">
+    <div id = "center">
+        <div style = 'width:10%'>
+
+        </div>
+        <div>
             <button id="start">Start</button>
+        
+            <br>
             <button id="stop">Stop</button>
+            <br>
             <button id="clear">Clear</button>
-            <br>
-            <br>
-            <button id="backward">Backward</button>
-            <button id="forward">Forward</button>
-            <br>
-            <br>
-            <button id="speedDown">Slower</button>
-            <button id="speedUp">Faster</button>
-            <p id = 'speed'>Speed: 100ms</p>
             <button id = "random">Randomize</button>
             <br>
-            <br>
+             <br>
             <button id = 'backgroundColor'>Change Background Color</button>
-            <button id = 'gridBoxColor'>Change gridBoxColor</button>         
+            <br>
+            <button id = 'gridBoxColor'>Change gridBoxColor</button>  
+            </div>
+            <br>
+            <br>
+<div style ='width:10%;'>   
+
+
+</div>
         </div>
-        <br>
         
-        <canvas id="canvas" width="500" height="500"></canvas>
+        </div>
         
     </div>
-    
+    id="buttons" style ='width:100px'>
+       
+       <br>
+       <button id="backward">Backward</button>
+       <br>
+       <button id="forward">Forward</button>
+       <br>
+       <br>
+       <button id="speedDown">Slower</button>
+       <br>
+       <button id="speedUp">Faster</button>
+       <p id = 'speed'>Speed: 100ms</p>
+</div>
+        <div id = 'center' >
+            <canvas id="canvas" width="700" height="500"></canvas>
+        
 <script src="game.js"></script>
 </body>
 </html>

@@ -5,6 +5,7 @@ button {
     color: #fff;
     border: none;
     cursor: pointer;
+    width:100%;
   }
 
   button:hover{
@@ -15,5 +16,15 @@ button {
   #center{
     display:flex;
     justify-content:center;
+    text-align: center;
+     
+  }
+  body{
+    background-image:url('Background.jpg');
+    background-repeat:no-repeat;
+    background-size:cover
+  }
 
+  div{
+    border:2px solid red;
   }
