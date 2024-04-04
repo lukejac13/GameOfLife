@@ -453,7 +453,7 @@ function stopGame(){
   
 
   function clearGrid() {
-    
+    frame = 0;
     document.getElementById('start').innerHTML = 'Start';
     grid = createGrid(numRows, numCols, 0);
     stopGame();
