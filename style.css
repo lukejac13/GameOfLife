@@ -1,10 +1,19 @@
+div{
+  
+  
+  border:1px solid gray
+}
+
 button {
-    padding: 5px 10px;
-    margin-right: 5px;
+    padding:0px 0px;
+    margin:0px;
     background-color: #333;
     color: #fff;
     border: none;
     cursor: pointer;
+    height:100%;
+    width: 13.5%;
+  
   }
 
   button:hover{
@@ -20,4 +29,77 @@ button {
   
   li:hover{
 cursor:pointer
+  }
+
+  body::-webkit-scrollbar {
+    display: none;
+  }
+
+ 
+
+  .sticky{
+    position:-webkit-sticky;
+    position:fixed;
+    top:0px;
+    z-index: 1000;
+  }
+  
+  .stickyBottom{
+    position:-webkit-sticky;
+    position:fixed;
+    bottom:0;
+    z-index:1000;
+    background-color:black;
+
+  }
+
+  .sideBar {
+    height: 100%;
+    width: 200px;
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    right: 0;
+    background-color:white;
+    overflow-x: hidden;
+    padding-top: 20px;
+    border:2px solid green;
+    transition:0.5s;
+    background-color:white;
+   background-image:url('background.jpg');
+  }
+
+  .sideButton{
+    width:100%;
+    height:30px;
+    margin-top:3px;
+  }
+
+  .openBtn {
+    position:fixed;
+    height:20px;
+    width:20px;
+    top:50%;
+    right:0;
+    z-index:1000;
+    font-size: 20px;
+    cursor: pointer;
+    background-color: white;
+    color: black;
+    transition:0.5s;
+    border: none;
+  }
+ 
+  .openBtn:hover {
+    background-color: #444;
+  }
+
+  #main{
+    transition:margin-right .5s;
+    padding:16px;
+  }
+
+  .stencilButton{
+    height:20px;
+    margin-top:2px;
   }
