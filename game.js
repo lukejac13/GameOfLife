@@ -17,6 +17,7 @@ let stencilArray = ['cell', 'glider', 'tub', 'beehive', 'boat', 'toad', 'lwss', 
 let isRandom = 0;
 
 var frame = 0;
+var frame = 0;
 var numAlive = 0;
 var numDead = 0;
 
@@ -457,6 +458,7 @@ function stopGame(){
   
 
   function clearGrid() {
+    frame = 0;
     frame = 0;
     document.getElementById('start').innerHTML = 'Start';
     grid = createGrid(numRows, numCols, 0);
