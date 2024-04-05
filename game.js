@@ -2,7 +2,7 @@ const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 const cellSize = 10;
 ctx.canvas.width = window.innerWidth-20;
-ctx.canvas.height =window.innerWidth;
+ctx.canvas.height = window.innerWidth;
 const numRows = canvas.height / cellSize;
 const numCols = canvas.width / cellSize;
 let grid = createGrid(numRows, numCols, 0);
@@ -16,7 +16,7 @@ let stencil = "cell";
 let stencilArray = ['cell', 'glider', 'tub', 'beehive', 'boat', 'toad', 'lwss', 'mwss', 'hwss', 'pulsar', 'block', 'gliderGun'];
 let isRandom = 0;
 
-let frame = 0;
+var frame = 0;
 var numAlive = 0;
 var numDead = 0;
 
@@ -25,34 +25,50 @@ toggleSideBar();
 
 let seedArray = [];
 
+const ourRules = 'Switch to our Rules';
+
+const conwaysRules = 'Switch to Conways Rules';
 
 
 const shapes = {
   'glider': [
-      [[0, 0, 1], [1, 0, 1], [0, 1, 1]]
+      [[0, 0, 1],
+       [1, 0, 1], 
+       [0, 1, 1]]
       
   ],
   'tub': [
-      [[0, 1, 0], [1, 0, 1], [0, 1, 0]]
+      [[0, 1, 0], 
+       [1, 0, 1], 
+       [0, 1, 0]]
   ],
   'block': [
-      [[1, 1], [1, 1]]
+      [[1, 1], 
+       [1, 1]]
   ],
   'beehive': [
-    [[0, 1, 1, 0], [1, 0, 0, 1], [0, 1, 1, 0]]
+    [[0, 1, 1, 0], 
+     [1, 0, 0, 1], 
+     [0, 1, 1, 0]]
     
   ], 
   'boat': [
-    [[1, 1, 0], [1, 0, 1], [0, 1, 0]]
+    [[1, 1, 0], 
+     [1, 0, 1], 
+     [0, 1, 0]]
     
   ],
   'toad': [
-    [[0, 1, 1, 1], [1, 1, 1, 0]]
+    [[0, 1, 1, 1], 
+     [1, 1, 1, 0]]
    
     
   ],
   'lwss': [
-    [[0, 1, 0, 0, 1], [1, 0, 0, 0, 0], [1, 0, 0, 0, 1], [1, 1, 1, 1, 0]]
+    [[0, 1, 0, 0, 1], 
+     [1, 0, 0, 0, 0],
+     [1, 0, 0, 0, 1], 
+     [1, 1, 1, 1, 0]]
     
 ],
 'mwss': [
@@ -107,13 +123,9 @@ const shapes = {
 };
 
 
-//Model 
+
 function createGrid(rows, cols, isRandom) {
   
-  
-    
-
-
     let grid = [];
     for (let i = 0; i < rows; i++) {
       let row = [];
@@ -212,6 +224,8 @@ if(ruleSet == 0){
         return count;
   }
 
+
+  
 function printAlive(){
   numDead = 0;
   numAlive = 0;
@@ -227,6 +241,7 @@ function printAlive(){
   }
   document.getElementById('numAlive').innerHTML = 'Living/Dead Cells: '+numAlive + " : "+numDead;
 }
+
 
   function invertColor(hex) {
     if (hex.indexOf('#') === 0) {
@@ -348,16 +363,6 @@ function rotate90(a) {
 function stencilRotate(){
   shapes[stencil][0] = rotate90(shapes[stencil][0]);
   let shape = rotate90(shapes[stencil][0])
-  /*
-  stencilOrientation+=1;
-  if(stencilOrientation > 3){
-    stencilOrientation = 0;
-  }
-
-  
-  let shape = shapes[stencil][stencilOrientation % shapes[stencil].length];
-*/
-
   
   for (let i = 0; i < shape.length; i++) {
       for (let j = 0; j < shape[i].length; j++) {
@@ -410,9 +415,8 @@ function setGliderGun(){
   setStencil('gliderGunButton', 'gliderGun');
 }
 
-  //End Model
 
-  //Controller
+
 
   function startStop(){
     if(!isRunning){
@@ -453,7 +457,7 @@ function stopGame(){
   
 
   function clearGrid() {
-    
+    frame = 0;
     document.getElementById('start').innerHTML = 'Start';
     grid = createGrid(numRows, numCols, 0);
     stopGame();
@@ -556,7 +560,7 @@ function clearSeeds() {
   document.getElementById('saveSeed').style.backgroundColor = '#333';
 }
 
-// Load seeds from localStorage on page load
+
 window.onload = function() {
   let savedSeeds = localStorage.getItem('seedArray');
   if (savedSeeds) {
@@ -673,7 +677,6 @@ function toggleSideBar() {
     }
     if(e.keyCode == 55){
       setBlock();
-
     }
     if(e.keyCode == 56){
       setLWSS();
@@ -734,5 +737,5 @@ function toggleSideBar() {
     
   
 });
-//endController
+
   renderGrid();

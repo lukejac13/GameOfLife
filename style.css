@@ -1,6 +1,4 @@
 div{
-  
-  
   border:1px solid gray
 }
 
@@ -13,7 +11,6 @@ button {
     cursor: pointer;
     height:100%;
     width: 13.5%;
-  
   }
 
   button:hover{
@@ -63,7 +60,7 @@ cursor:pointer
     background-color:white;
     overflow-x: hidden;
     padding-top: 20px;
-    border:2px solid green;
+    border:4px solid green;
     transition:0.5s;
     background-color:white;
    background-image:url('background.jpg');
@@ -77,7 +74,7 @@ cursor:pointer
 
   .openBtn {
     position:fixed;
-    height:20px;
+    height:50px;
     width:20px;
     top:50%;
     right:0;
